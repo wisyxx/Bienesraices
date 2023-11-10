@@ -1,0 +1,20 @@
+// Base
+@import 'base/normalize';
+@import 'base/variables';
+@import 'base/mixins';
+@import 'base/globales';
+@import 'base/utilidades';
+@import 'base/darkmode';
+@import 'base/botones';
+
+// Layout
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/navegacion';
+@import 'layout/iconos';
+@import 'layout/anuncios';
+@import 'layout/imagencontacto';
+@import 'layout/inferior';
+@import 'layout/nosotros';
+@import 'layout/contacto';
+@import 'layout/admin.scss';

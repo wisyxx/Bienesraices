@@ -1,0 +1,34 @@
+.dark {
+  background-color: $grisOscuro;
+  *,
+  .legend {
+    color: $blanco;
+  }
+  .iconos-caracteristicas img,
+  .icono img {
+    filter: invert(100%);
+  }
+  .anuncio {
+    background-color: darken($grisOscuro, $amount: 3);
+    border: none;
+  }
+  .footer,
+  .header {
+    background-color: darken($grisOscuro, $amount: 8);
+  }
+  input, textarea, select, option {
+    background-color: darken($grisOscuro, $amount: 8);
+    color: $blanco;
+  }
+  input[type="submit"] {
+    background-color: $verde;
+    color: $blanco;
+  }
+  input[type="submit"].boton-rojo-block {
+    background-color: $rojo;
+    color: $blanco;
+    &:hover {
+      background-color: lighten($color: $rojo, $amount: 5);
+    }
+  }
+}

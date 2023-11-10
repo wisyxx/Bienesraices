@@ -1,0 +1,14 @@
+.footer {
+  background-color: $grisOscuro;
+  padding: calc($separacion / 3) 0 ;
+  margin-bottom: 0;
+
+  .copy {
+    color: $blanco;
+    text-align: center;
+  }
+
+  .contenedor-footer {
+    padding-top: calc($separacion / 3);
+  }
+}

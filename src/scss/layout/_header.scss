@@ -1,0 +1,46 @@
+.header {
+	background-color: $grisOscuro;
+	padding: 2rem 0 2rem 0;
+
+	h1 {
+		display: none;
+	}
+}
+
+.inicio {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.contenido-header {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		@include tablet {
+			min-height: 60rem;
+		}
+	}
+
+	h1 {
+		display: block;
+		color: $blanco;
+		text-align: left;
+		font-weight: bold;
+		width: 61%;
+	}
+}
+.webp .inicio {
+	background-image: url("../img/header.webp");
+}
+.no-webp .inicio {
+	background-image: url("../img/header.jpg");
+}
+
+.movil-menu {
+  display: flex;
+  justify-content: center;
+	.img-menu {
+		width: 80%;
+	}
+}

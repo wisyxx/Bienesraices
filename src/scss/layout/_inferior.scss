@@ -1,0 +1,98 @@
+@include tablet {
+  .seccion-inferior {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.entrada-blog {
+  margin-top: 2rem;
+
+  @include tablet {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    place-items: center;
+    gap: 2rem;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.texto-entrada {
+  a {
+    color: $negro;
+  }
+  h4 {
+    margin: 0;
+
+    &:after {
+      display: block;
+      content: '';
+      width: 15rem;
+      height: 0.5rem;
+      background-color: $verde;
+      margin: 1rem 0;
+    }
+  }
+  p {
+    margin: 1.5rem 0;
+  }
+  span {
+    color: $amarillo;
+  }
+}
+.testimoniales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonial {
+  background-color: $verde;
+  border-radius: 1rem;
+  padding: 2rem;
+  color: $blanco;
+  position: relative;
+  p {
+    text-align: center;
+    &:before {
+      content: "";
+      display: block;
+      height: .2rem;
+      width: 100%;
+      background-color: $blanco;
+      margin-bottom: 1.2rem;
+    }
+    @include tablet {
+      text-align: right;
+      &:before {
+        width: 60%;
+        margin: 0 auto 1.2rem auto;
+      }
+    }
+    color: $blanco;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  blockquote {
+    padding-left: 5rem;
+    font-size: 2rem;
+    
+    &::before {
+      content: '';
+      background-image: url('../img/comilla.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: 8rem;
+      width: 6rem;
+      display: block;
+      position: absolute;
+      left: 5rem;
+      top: 1rem;
+    }
+  }
+}
