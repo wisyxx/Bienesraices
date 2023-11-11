@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+// Sesion
+require '../includes/funciones.php';
+$auth = isAuth();
+
+if (!$auth) {
+    header('Location: login.php');
+}
+
 // Query
 $query = "SELECT * FROM propiedades;";
 
@@ -11,7 +19,6 @@ $db = conectarDB();
 $resultadoConsulta = mysqli_query($db, $query);
 
 // Incluye plantilla
-require '../includes/funciones.php';
 incluirTemplate('header');
 
 // Mensaje condicional

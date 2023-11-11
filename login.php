@@ -38,9 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['usuario'] = $email;
                 $_SESSION['login'] = true;
                 header("Location: /admin?resultado=4&&usuario=$email");
-                echo '<pre>';
-                var_dump($_SESSION);
-                echo '</pre>';
             } else {
                 $errores[] = 'Contraseña incorrecta';
             }

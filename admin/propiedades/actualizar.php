@@ -1,6 +1,13 @@
 <?php
 
 declare(strict_types=1);
+// Sesion
+require '../../includes/funciones.php';
+$auth = isAuth();
+
+if (!$auth) {
+    header('Replace: /login.php');
+}
 
 // Filtrar el id de la vivienda a actualizar
 $id = $_GET['id'];
@@ -123,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
