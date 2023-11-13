@@ -1,3 +1,5 @@
-<?php declare(strict_types = 1);
-define('TEMPLATES_URL', __DIR__.'/templates');
-define('FUNCIONES_URL', 'funciones.php');
+<?php declare(strict_types=1);
+
+require "funciones.php";
+require "config/database.php";
+require __DIR__ . "/../vendor/autoload.php";

@@ -1,7 +1,6 @@
 <?php
 
 // Importar conexión
-require './includes/config/database.php';
 $db = conectarDB();
 
 // Consulta
