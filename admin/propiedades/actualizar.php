@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 // Sesion
-require '../../includes/funciones.php';
+require '../../includes/app.php';
 $auth = isAuth();
 
 if (!$auth) {
@@ -17,8 +17,6 @@ if (!$id) {
     header('Location: /admin');
 }
 
-// DB
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 // Obtener datos propiedad

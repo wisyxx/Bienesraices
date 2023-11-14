@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 // Sesion
-require '../includes/funciones.php';
+require '../includes/app.php';
 $auth = isAuth();
 
 if (!$auth) {
@@ -13,8 +13,6 @@ if (!$auth) {
 // Query
 $query = "SELECT * FROM propiedades;";
 
-// Consultar DB
-require '../includes/config/database.php';
 $db = conectarDB();
 $resultadoConsulta = mysqli_query($db, $query);
 

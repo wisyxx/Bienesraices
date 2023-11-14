@@ -1,13 +1,13 @@
 <?php
 
 declare(strict_types=1);
-// echo '<pre>';
-// var_dump($_POST);
-// echo '</pre>';
 
 // DB
-require '../../includes/config/database.php';
+require '../../includes/app.php';
 $db = conectarDB();
+
+// Importar clase Propiedad
+use App\Propiedad;
 
 //Consultar vendedores
 $consultaVendedores = "SELECT * FROM vendedores";
@@ -25,20 +25,15 @@ $precio = '';
 $vendedorId = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // echo '<pre>';
-    // var_dump($_POST);
-    // echo '</pre>';
-
-    // echo '<pre>';
-    // var_dump($_FILES);
-    // echo '</pre>';
+    $propiedad = new Propiedad($_POST);
+    debug($propiedad);
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $garages = mysqli_real_escape_string($db, $_POST['garages']);
-    $wc = mysqli_real_escape_string($db, $_POST['baños']);
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
     $precio = mysqli_real_escape_string($db, $_POST['precio']);
+    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
+    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
+    $wc = mysqli_real_escape_string($db, $_POST['wc']);
+    $garages = mysqli_real_escape_string($db, $_POST['garages']);
     $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
     $creado = date('Y/m/d');
 
@@ -109,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -147,7 +141,7 @@ incluirTemplate('header');
             <input type="number" name="habitaciones" id="habitaciones" placeholder="Ej: 3" value="<?php echo $habitaciones ?>">
 
             <label for="baños">Baños:</label>
-            <input type="number" name="baños" id="baños" placeholder="Ej: 3" value="<?php echo $wc ?>">
+            <input type="number" name="wc" id="wc" placeholder="Ej: 3" value="<?php echo $wc ?>">
 
             <label for="garages">Garages:</label>
             <input type="number" name="garages" id="garages" placeholder="Ej: 3" value="<?php echo $garages ?>">
@@ -155,7 +149,7 @@ incluirTemplate('header');
         <fieldset>
             <legend class="legend">Vendedor</legend>
 
-            <select name="vendedor" id="vendedor">
+            <select name="vendedorId" id="vendedor">
                 <option value="">--Seleccione--</option>
                 <?php while ($vendedor = mysqli_fetch_assoc($resultadoVendedores)) : ?>
                     <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : ''; ?> value="<?php echo $vendedor['id'] ?>"><?php echo $vendedor['nombre'] . ' ' . $vendedor['apellidos']; ?></option>

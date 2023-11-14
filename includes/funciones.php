@@ -18,4 +18,10 @@ function isAuth(): bool
     }
     return false;
 }
-?>
+
+function debug($var) {
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+    exit;
+}
