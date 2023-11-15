@@ -26,7 +26,7 @@ $vendedorId = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $propiedad = new Propiedad($_POST);
-    debug($propiedad);
+    $propiedad->guardar();
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
     $precio = mysqli_real_escape_string($db, $_POST['precio']);
@@ -89,12 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Mover imagen
         move_uploaded_file($imagen["tmp_name"], $carpetaImagenes . $nombreImagen);
-
-        // Insertar la base de datos
-        $query = "INSERT INTO propiedades 
-        (titulo, precio, imagen, descripcion, habitaciones, garages, wc, vendedorId, creado) 
-        VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', 
-        '$garages', '$wc', '$vendedorId', '$creado');";
 
         $resultado = mysqli_query($db, $query);
     }
