@@ -6,15 +6,13 @@ declare(strict_types=1);
 require '../../includes/app.php';
 $db = conectarDB();
 
-// Importar clase Propiedad
 use App\Propiedad;
 
-//Consultar vendedores
 $consultaVendedores = "SELECT * FROM vendedores";
 $resultadoVendedores = mysqli_query($db, $consultaVendedores);
 
-// Mensajes de error
-$errores = [];
+$errores = Propiedad::getErrores();
+
 
 $titulo = '';
 $habitaciones = '';
@@ -28,19 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $propiedad = new Propiedad($_POST);
     $propiedad->guardar();
 
-    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $precio = mysqli_real_escape_string($db, $_POST['precio']);
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $wc = mysqli_real_escape_string($db, $_POST['wc']);
-    $garages = mysqli_real_escape_string($db, $_POST['garages']);
-    $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
-    $creado = date('Y/m/d');
-
-    // Asignar $_FILES a una variable
     $imagen = $_FILES['imagen'];
 
-    // Validar
+    /* VALIDACION */
     if (!$titulo) {
         $errores[] = "Debes añadir un titulo";
     }
@@ -63,31 +51,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$vendedorId) {
         $errores[] = "Seleccione un vendedor";
     }
-    if(!$imagen['name']) {
+    if (!$imagen['name']) {
         $errores[] = "Suba una imagen";
     }
 
-    // Validar tamaño
+    /* TAMAÑO MAX IMAGEN */
     $medida = 1000 * 1000;
 
-    if($imagen['size'] > $medida) {
+    if ($imagen['size'] > $medida) {
         $errores[] = "La imagen es muy pesada";
     }
-
-
+    
     if (empty($errores)) {
         /** SUBIDA DE ARCHIVOS **/
-
-        // Crear carpeta
         $carpetaImagenes = "../../imagenes/";
         if (!is_dir($carpetaImagenes)) {
             mkdir($carpetaImagenes);
         }
 
-        // Nombres únicos
+        // Crear nombres únicos
         $nombreImagen = md5(uniqid(strval(rand(1, 100)), true)) . '.jpg';
 
-        // Mover imagen
         move_uploaded_file($imagen["tmp_name"], $carpetaImagenes . $nombreImagen);
 
         $resultado = mysqli_query($db, $query);
@@ -101,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 incluirTemplate('header');
 ?>
 
+<!-- HTML -->
 <main class="contenedor">
     <h1>Crear propiedad</h1>
     <a href="/admin" class="boton boton-verde">Volver</a>

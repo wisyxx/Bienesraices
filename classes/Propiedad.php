@@ -4,14 +4,16 @@ namespace App;
 
 class Propiedad
 {
-    // DB
+    /* DB */
     protected static $db;
-
     protected static $columnasDB = [
         'id', 'titulo', 'precio',
         'imagen', 'descripcion', 'habitaciones',
         'wc', 'garages', 'vendedorId', 'creado'
     ];
+
+    /* ERRORES */
+    protected static $errores;
 
     public $id;
     public $titulo;
@@ -46,14 +48,13 @@ class Propiedad
 
     public function guardar()
     {
-        // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
-        // Insertar la base de datos
-        $query = "INSERT INTO propiedades 
-        (titulo, precio, imagen, descripcion, habitaciones, garages, wc, vendedorId, creado) 
-        VALUES ('$this->titulo', '$this->precio', '$this->imagen', '$this->descripcion', '$this->habitaciones', 
-        '$this->garages', '$this->wc', '$this->vendedorId', '$this->creado');";
+        $query = "INSERT INTO propiedades (";
+        $query .= join(", ", array_keys($atributos));
+        $query .= " ) VALUES ('";
+        $query .= join("', '", array_values($atributos));
+        $query .= "');";
 
         $resultado = self::$db->query($query);
     }
@@ -78,5 +79,11 @@ class Propiedad
         }
 
         return $sanitizado;
+    }
+
+    /* VALIDACION */
+    public static function getErrores()
+    {
+        return self::$errores;
     }
 }
