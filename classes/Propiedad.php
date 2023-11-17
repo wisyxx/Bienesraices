@@ -74,7 +74,7 @@ class Propiedad
     {
         $atributos = $this->atributos();
         $sanitizado = [];
-        foreach($atributos as $key => $value) {
+        foreach ($atributos as $key => $value) {
             $sanitizado[$key] = self::$db->escape_string($value);
         }
 
@@ -84,6 +84,36 @@ class Propiedad
     /* VALIDACION */
     public static function getErrores()
     {
+        return self::$errores;
+    }
+    public function validar()
+    {
+        if (!$this->titulo) {
+            self::$errores[] = "Debes añadir un titulo";
+        }
+        if (!$this->precio) {
+            self::$errores[] = "El precio es obligatorio";
+        }
+        if (strlen($this->descripcion) < 50) {
+            self::$errores[] = "La descripción es obligatoria, 
+        escribe al menos 50 caracteres";
+        }
+        if (!$this->habitaciones) {
+            self::$errores[] = "El numero de habitaciones es obligatorio";
+        }
+        if (!$this->wc) {
+            self::$errores[] = "El numero de baños es obligatorio";
+        }
+        if ($this->garages < 0 || $this->garages > 10) {
+            self::$errores[] = "El numero de garages es obligatorio";
+        }
+        if (!$this->vendedorId) {
+            self::$errores[] = "Seleccione un vendedor";
+        }
+        if (!$this->imagen['name']) {
+            self::$errores[] = "Suba una imagen";
+        }
+
         return self::$errores;
     }
 }

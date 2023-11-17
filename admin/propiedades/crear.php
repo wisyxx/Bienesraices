@@ -24,36 +24,14 @@ $vendedorId = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $propiedad = new Propiedad($_POST);
-    $propiedad->guardar();
+
+    $errores = $propiedad->validar();
+    if (!isset($errores)) {
+        $propiedad->guardar();
+    }
 
     $imagen = $_FILES['imagen'];
 
-    /* VALIDACION */
-    if (!$titulo) {
-        $errores[] = "Debes añadir un titulo";
-    }
-    if (!$precio) {
-        $errores[] = "El precio es obligatorio";
-    }
-    if (strlen($descripcion) < 50) {
-        $errores[] = "La descripción es obligatoria, 
-        escribe al menos 50 caracteres";
-    }
-    if (!$habitaciones) {
-        $errores[] = "El numero de habitaciones es obligatorio";
-    }
-    if (!$wc) {
-        $errores[] = "El numero de baños es obligatorio";
-    }
-    if ($garages < 0 || $garages > 10) {
-        $errores[] = "El numero de garages es obligatorio";
-    }
-    if (!$vendedorId) {
-        $errores[] = "Seleccione un vendedor";
-    }
-    if (!$imagen['name']) {
-        $errores[] = "Suba una imagen";
-    }
 
     /* TAMAÑO MAX IMAGEN */
     $medida = 1000 * 1000;
@@ -101,29 +79,29 @@ incluirTemplate('header');
             <legend class="legend">Información general</legend>
 
             <label for="titulo">Titulo:</label>
-            <input maxlength="45" type="text" name="titulo" id="titulo" placeholder="Tiulo propiedad" value="<?php echo $titulo ?>">
+            <input maxlength="45" type="text" name="titulo" id="titulo" placeholder="Tiulo propiedad" value="<?php echo $propiedad->titulo ?>">
 
             <label for="precio">Precio:</label>
-            <input type="number" name="precio" id="precio" placeholder="Precio propiedad" value="<?php echo $precio ?>">
+            <input type="number" name="precio" id="precio" placeholder="Precio propiedad" value="<?php echo $propiedad->precio ?>">
 
             <label for="imagen">Imagen:</label>
-            <input type="file" accept="image/jpeg, image/png" name="imagen" id="imagen" value="<?php echo $imagen ?>">
+            <input type="file" accept="image/jpeg, image/png" name="imagen" id="imagen">
 
             <label for="descripcion">Descripción</label>
-            <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo $descripcion ?></textarea>
+            <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo $propiedad->descripcion ?></textarea>
         </fieldset>
 
         <fieldset>
             <legend class="legend">Información Propiedad</legend>
 
             <label for="habitaciones">Habitaciones:</label>
-            <input type="number" name="habitaciones" id="habitaciones" placeholder="Ej: 3" value="<?php echo $habitaciones ?>">
+            <input type="number" name="habitaciones" id="habitaciones" placeholder="Ej: 3" value="<?php echo $propiedad->habitaciones ?>">
 
             <label for="baños">Baños:</label>
-            <input type="number" name="wc" id="wc" placeholder="Ej: 3" value="<?php echo $wc ?>">
+            <input type="number" name="wc" id="wc" placeholder="Ej: 3" value="<?php echo $propiedad->wc ?>">
 
             <label for="garages">Garages:</label>
-            <input type="number" name="garages" id="garages" placeholder="Ej: 3" value="<?php echo $garages ?>">
+            <input type="number" name="garages" id="garages" placeholder="Ej: 3" value="<?php echo $propiedad->garages ?>">
         </fieldset>
         <fieldset>
             <legend class="legend">Vendedor</legend>
