@@ -7,6 +7,7 @@ require '../../includes/app.php';
 $db = conectarDB();
 
 use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
 
 $consultaVendedores = "SELECT * FROM vendedores";
 $resultadoVendedores = mysqli_query($db, $consultaVendedores);
@@ -23,40 +24,34 @@ $precio = '';
 $vendedorId = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $propiedad = new Propiedad($_POST);
 
+    /** SUBIDA DE ARCHIVOS **/
+
+    // Generar nombres únicos
+    $nombreImagen = md5(uniqid(strval(rand(1, 100)), true)) . '.jpg';
+
+    if ($_FILES['imagen']['tmp_name']) {
+        // Hacer resize a la imagen
+        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $propiedad->setImagen($nombreImagen);
+    }
+
+    /* VALIDAR */
     $errores = $propiedad->validar();
-    if (!isset($errores)) {
-        $propiedad->guardar();
-    }
 
-    $imagen = $_FILES['imagen'];
-
-
-    /* TAMAÑO MAX IMAGEN */
-    $medida = 1000 * 1000;
-
-    if ($imagen['size'] > $medida) {
-        $errores[] = "La imagen es muy pesada";
-    }
-    
     if (empty($errores)) {
-        /** SUBIDA DE ARCHIVOS **/
+        // Crear la carpeta para las imagenes
         $carpetaImagenes = "../../imagenes/";
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
+        if (!is_dir(CARPETA_IMAGENES)) {
+            mkdir(CARPETA_IMAGENES);
         }
+        $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-        // Crear nombres únicos
-        $nombreImagen = md5(uniqid(strval(rand(1, 100)), true)) . '.jpg';
+        $propiedad->guardarEntradaDB();
 
-        move_uploaded_file($imagen["tmp_name"], $carpetaImagenes . $nombreImagen);
-
-        $resultado = mysqli_query($db, $query);
-    }
-
-    if ($resultado) {
-        header('Location: /admin?resultado=1');
+        header('Location: /admin?resultado=1');        
     }
 }
 

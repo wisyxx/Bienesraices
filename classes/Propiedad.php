@@ -46,7 +46,7 @@ class Propiedad
         $this->creado = date('Y/m/d');
     }
 
-    public function guardar()
+    public function guardarEntradaDB()
     {
         $atributos = $this->sanitizarAtributos();
 
@@ -57,6 +57,8 @@ class Propiedad
         $query .= "');";
 
         $resultado = self::$db->query($query);
+
+        return $resultado;
     }
 
     public function atributos()
@@ -79,6 +81,13 @@ class Propiedad
         }
 
         return $sanitizado;
+    }
+
+    public function setImagen($imagen)
+    {
+        if ($imagen) {
+            $this->imagen = $imagen;
+        }
     }
 
     /* VALIDACION */
@@ -110,7 +119,7 @@ class Propiedad
         if (!$this->vendedorId) {
             self::$errores[] = "Seleccione un vendedor";
         }
-        if (!$this->imagen['name']) {
+        if (!$this->imagen) {
             self::$errores[] = "Suba una imagen";
         }
 
