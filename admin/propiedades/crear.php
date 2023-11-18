@@ -49,9 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-        $propiedad->guardarEntradaDB();
+        $resultado = $propiedad->guardarEntradaDB();
 
-        header('Location: /admin?resultado=1');        
+        if ($resultado) {
+            header('Location: /admin?resultado=1');
+        }
     }
 }
 
