@@ -11,7 +11,6 @@ if (!$id) {
     header("Location: /anuncios.php");
 }
 
-require './includes/config/database.php';
 $db = conectarDB();
 
 /** CONECTAR BASE DE DATOS **/
