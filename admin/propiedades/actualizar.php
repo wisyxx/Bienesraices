@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+use App\Propiedad;
+
 // Sesion
 require '../../includes/app.php';
 $auth = isAuth();
@@ -17,12 +20,8 @@ if (!$id) {
     header('Location: /admin');
 }
 
-$db = conectarDB();
-
 // Obtener datos propiedad
-$consultaPropiedad = "SELECT * FROM propiedades WHERE id = $id";
-$resultadoPropiedad = mysqli_query($db, $consultaPropiedad);
-$propiedad = mysqli_fetch_assoc($resultadoPropiedad);
+$propiedad = Propiedad::find($id);
 
 //Consultar vendedores
 $consultaVendedores = "SELECT * FROM vendedores";
@@ -31,33 +30,13 @@ $resultadoVendedores = mysqli_query($db, $consultaVendedores);
 // Mensajes de error
 $errores = [];
 
-$titulo = $propiedad['titulo'];
-$habitaciones = $propiedad['habitaciones'];
-$wc = $propiedad['wc'];
-$garages = $propiedad['garages'];
-$descripcion = $propiedad['descripcion'];
-$precio = $propiedad['precio'];
-$vendedorId = $propiedad['vendedorId'];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // echo '<pre>';
-    // var_dump($_POST);
-    // echo '</pre>';
+    // Asignar atributos
+    $args = $_POST['propiedad'];
+    
+    $propiedad->sync($args);
+    debug($propiedad);
 
-    // echo '<pre>';
-    // var_dump($_FILES);
-    // echo '</pre>';
-
-    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $garages = mysqli_real_escape_string($db, $_POST['garages']);
-    $wc = mysqli_real_escape_string($db, $_POST['baños']);
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $precio = mysqli_real_escape_string($db, $_POST['precio']);
-    $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
-    $creado = date('Y/m/d');
-
-    // Asignar $_FILES a una variable
     $imagen = $_FILES['imagen'];
 
     // Validar
@@ -132,7 +111,7 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor">
-    <h1>Actualiar propiedad</h1>
+    <h1>Actualizar propiedad</h1>
     <a href="/admin" class="boton boton-verde">Volver</a>
 
     <?php foreach ($errores as $error) : ?>
@@ -142,47 +121,7 @@ incluirTemplate('header');
     <?php endforeach; ?>
 
     <form class="formulario" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend class="legend">Información general</legend>
-
-            <label for="titulo">Titulo:</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Tiulo propiedad" value="<?php echo $titulo ?>">
-
-            <label for="precio">Precio:</label>
-            <input type="number" name="precio" id="precio" placeholder="Precio propiedad" value="<?php echo $precio ?>">
-
-            <label for="imagen">Imagen:</label>
-            <input type="file" accept="image/jpeg, image/png" name="imagen" id="imagen" value="<?php echo $imagen ?>">
-            <img src="<?php echo '/imagenes/' . $propiedad['imagen']; ?>" alt="imagen propiedad" class="small-img">
-
-            <label for="descripcion">Descripción</label>
-            <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo $descripcion ?></textarea>
-        </fieldset>
-
-        <fieldset>
-            <legend class="legend">Información Propiedad</legend>
-
-            <label for="habitaciones">Habitaciones:</label>
-            <input type="number" name="habitaciones" id="habitaciones" placeholder="Ej: 3" min="1" max="10" value="<?php echo $habitaciones ?>">
-
-            <label for="baños">Baños:</label>
-            <input type="number" name="baños" id="baños" placeholder="Ej: 3" min="1" max="4" value="<?php echo $wc ?>">
-
-            <label for="garages">Garages:</label>
-            <input type="number" name="garages" id="garages" placeholder="Ej: 3" min="0" max="4" value="<?php echo $garages ?>">
-        </fieldset>
-        <fieldset>
-            <legend class="legend">Vendedor</legend>
-
-            <select name="vendedor" id="vendedor">
-                <option value="">--Seleccione--</option>
-                <?php while ($vendedor = mysqli_fetch_assoc($resultadoVendedores)) : ?>
-                    <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : ''; ?> value="<?php echo $vendedor['id'] ?>"><?php echo $vendedor['nombre'] . ' ' . $vendedor['apellidos']; ?></option>
-                <?php endwhile; ?>
-            </select>
-        </fieldset>
-
-        <input type="submit" value="Actualizar propiedad" class="boton boton-verde">
+        <?php include '../../includes/templates/formulario_propiedades.php'; ?>
     </form>
 </main>
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 // DB
 require '../../includes/app.php';
-$db = conectarDB();
 
 use App\Propiedad;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -16,16 +15,16 @@ $errores = Propiedad::getErrores();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $propiedad = new Propiedad($_POST);
+    $propiedad = new Propiedad($_POST['propiedad']);
 
     /** SUBIDA DE ARCHIVOS **/
 
     // Generar nombres únicos
     $nombreImagen = md5(uniqid(strval(rand(1, 100)), true)) . '.jpg';
 
-    if ($_FILES['imagen']['tmp_name']) {
+    if ($_FILES['propiedad']['tmp_name']['imagen']) {
         // Hacer resize a la imagen
-        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800, 600);
         $propiedad->setImagen($nombreImagen);
     }
 
