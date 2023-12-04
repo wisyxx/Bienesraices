@@ -34,7 +34,7 @@ $errores = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Asignar atributos
     $args = $_POST['propiedad'];
-    
+
     $propiedad->sync($args);
 
     $errores = $propiedad->validar();
@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $propiedad->setImagen($nombreImagen);
     }
     if (empty($errores)) {
-        $image->save(CARPETA_IMAGENES . $nombreImagen);
+        if ($_FILES['propiedad']['tmp_name']['imagen']) {
+            $image->save(CARPETA_IMAGENES . $nombreImagen);
+        }
         $resultado = $propiedad->guardarEntradaDB();
     }
 }

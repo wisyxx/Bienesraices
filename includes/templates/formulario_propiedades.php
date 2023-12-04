@@ -33,4 +33,4 @@
     <legend class="legend">Vendedor</legend>
 </fieldset>
 
-<input type="submit" value="Crear Propiedad" class="boton boton-verde">
+<input type="submit" value="<?php echo is_null($propiedad->id) ? 'Crear propiedad' : 'Actualizar propiedad'; ?>" class="boton boton-verde">

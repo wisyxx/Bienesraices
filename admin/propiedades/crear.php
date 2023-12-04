@@ -8,6 +8,8 @@ require '../../includes/app.php';
 use App\Propiedad;
 use Intervention\Image\ImageManagerStatic as Image;
 
+$propiedad = new Propiedad;
+
 $consultaVendedores = "SELECT * FROM vendedores";
 $resultadoVendedores = mysqli_query($db, $consultaVendedores);
 
@@ -39,11 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-        $resultado = $propiedad->guardarEntradaDB();
-
-        if ($resultado) {
-            header('Location: /admin?resultado=1');
-        }
+        $propiedad->guardarEntradaDB();
     }
 }
 

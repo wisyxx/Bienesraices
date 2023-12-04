@@ -35,26 +35,27 @@ class Propiedad
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
-        $this->titulo = $args['titulo'] ?? null;
-        $this->precio = $args['precio'] ?? null;
-        $this->imagen = $args['imagen'] ?? null;
-        $this->descripcion = $args['descripcion'] ?? null;
-        $this->habitaciones = $args['habitaciones'] ?? null;
-        $this->garages = $args['garages'] ?? null;
-        $this->wc = $args['wc'] ?? null;
-        $this->vendedorId = $args['vendedorId'] ?? null;
+        $this->titulo = $args['titulo'] ?? '';
+        $this->precio = $args['precio'] ?? '';
+        $this->imagen = $args['imagen'] ?? '';
+        $this->descripcion = $args['descripcion'] ?? '';
+        $this->habitaciones = $args['habitaciones'] ?? '';
+        $this->garages = $args['garages'] ?? '';
+        $this->wc = $args['wc'] ?? '';
+        $this->vendedorId = $args['vendedorId'] ?? 1;
         $this->creado = date('Y/m/d');
     }
 
-    public function guardarEntradaDB() {
-        if (isset($this->id)) {
+    public function guardarEntradaDB()
+    {
+        if (!is_null($this->id)) {
             $this->actualizarEntradaDB();
         } else {
             $this->crearEntradaDB();
         }
     }
 
-    public function crearEntradaDB() 
+    public function crearEntradaDB()
     {
         $atributos = $this->sanitizarAtributos();
 
@@ -65,24 +66,26 @@ class Propiedad
         $query .= "');";
 
         $resultado = self::$db->query($query);
-
-        return $resultado;
+        if ($resultado) {
+            header('Location: /admin?resultado=1');
+        }
     }
 
-    public function actualizarEntradaDB() {
+    public function actualizarEntradaDB()
+    {
         $atributos = $this->sanitizarAtributos();
 
         $valores = [];
-        foreach($atributos as $key => $value) {
+        foreach ($atributos as $key => $value) {
             $valores[] = "$key = '$value'";
         }
+
         $query = " UPDATE propiedades SET ";
         $query .= join(', ', $valores);
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= "LIMIT 1;";
 
         $resultado = self::$db->query($query);
-
         if ($resultado) {
             header('Location: /admin?resultado=2');
         }
@@ -95,10 +98,21 @@ class Propiedad
         $atributos = [];
         foreach (self::$columnasDB as $columna) {
             if ($columna === 'id') continue;
-
             $atributos[$columna] = $this->$columna;
         }
+
         return $atributos;
+    }
+
+    public function eliminar()
+    {
+        $queryBorrar = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1 ";
+        $resultado = self::$db->query($queryBorrar);
+
+        if ($resultado) {
+            $this->borrarImagen();
+            header('Location: /admin?resultado=3');
+        }
     }
 
     public function sanitizarAtributos()
@@ -115,15 +129,19 @@ class Propiedad
     public function setImagen($imagen)
     {
         // If we are updating replace the last image with the new one
-        if ($this->id) {
-            $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
-            if ($existeArchivo) {
-                unlink(CARPETA_IMAGENES . $this->imagen);
-            }
+        if (!is_null($this->id)) {
+            $this->borrarImagen();
         }
-
         if ($imagen) {
             $this->imagen = $imagen;
+        }
+    }
+
+    public function borrarImagen()
+    {
+        $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
+        if ($existeArchivo) {
+            unlink(CARPETA_IMAGENES . $this->imagen);
         }
     }
 
@@ -132,6 +150,7 @@ class Propiedad
     {
         return self::$errores;
     }
+
     public function validar()
     {
         if (!$this->titulo) {
@@ -176,7 +195,6 @@ class Propiedad
     public static function find($id)
     {
         $query = "SELECT * FROM propiedades WHERE id = $id";
-
         $resultado = self::consultarSQL($query);
 
         return array_shift($resultado);
@@ -196,6 +214,7 @@ class Propiedad
 
         return $array;
     }
+
     protected static function crearObjeto($registro)
     {
         $objeto = new self;
@@ -205,6 +224,7 @@ class Propiedad
                 $objeto->$key = $value;
             }
         }
+        
         return $objeto;
     }
 
