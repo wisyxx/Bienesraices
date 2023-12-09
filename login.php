@@ -1,76 +1,72 @@
-<?php
+<?php 
 
-declare(strict_types=1);
-require 'includes/app.php';
-incluirTemplate('header');
+    // Incluye el header
+    require 'includes/app.php';
+    use App\Admin;
 
-$db = conectarDB();
+    $errores = Admin::getErrores();
 
-$errores = [];
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Instanciar admin
+        $admin = new Admin($_POST['admin']);
+        $errores = $admin->validar();
+        
+        if(empty($errores)) {
 
-    $email = mysqli_real_escape_string($db, strval(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)));
+            // Revisar si el usuario existe.
+            $resultado = $admin->existeUsuario();
 
-    $password = mysqli_real_escape_string($db, $_POST['password']);
-
-    if (!$email) {
-        $errores[] = 'El e-mail es obligatorio';
-    }
-    if (!$password) {
-        $errores[] = 'La contraseña es obligatoria';
-    }
-
-    if (empty($errores)) {
-        $queryMail = "SELECT * FROM usuarios WHERE email = '$email';";
-        $resultadoMail = mysqli_query($db, $queryMail);
-
-        if ($resultadoMail->num_rows) {
-            $usuario = mysqli_fetch_assoc($resultadoMail);
+            // Asignar el resultado del arreglo de resultado
+            [$existe, $resultado] = $resultado;
             
-            $auth = password_verify($password, $usuario['password']);
+            if( $existe ) {
+                // Usuario existe, verificar su password
+                $resultado = $admin->verificarPassword($resultado);
+                [$auth] = $resultado;
 
-            if ($auth) {
-                session_start();
-
-                // Llenar la sesión
-                $_SESSION['usuario'] = $email;
-                $_SESSION['login'] = true;
-                header("Location: /admin?resultado=4&&usuario=$email");
+                // Verificar si el password es correcto o no
+                if(!$auth) {
+                    return header('Location: /admin');
+                } else {
+                    $errores = $resultado[1];
+                }
             } else {
-                $errores[] = 'Contraseña incorrecta';
+                $errores = $resultado;
             }
-        } else {
-            $errores[] = 'El usuario no existe';
         }
-    }
-}
 
+    }
+
+
+
+    incluirTemplate('header');
 ?>
 
-<main class="contenedor">
-    <h1>Iniciar sesión</h1>
+    <main class="contenedor seccion contenido-centrado">
+        <h1>Iniciar Sesión</h1>
 
-    <?php foreach ($errores as $error) : ?>
-        <div class="alerta error">
-            <?php echo $error; ?>
-        </div>
-    <?php endforeach; ?>
-    <form class="formulario" method="POST">
-        <fieldset>
-            <legend class="legend">Correo y contraseña</legend>
+        <?php foreach($errores as $error): ?>
+            <div class="alerta error">
+                <?php echo $error; ?>
+            </div>
+        <?php endforeach; ?>
 
-            <label for="email">E-mail</label>
-            <input type="email" name="email" id="email">
+        <form method="POST" class="formulario" novalidate>
+            <fieldset>
+                <legend>Email y Password</legend>
 
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password">
+                <label for="email">E-mail</label>
+                <input type="email" name="admin[email]" placeholder="Tu Email" id="email">
 
-            <input class="boton-verde" type="submit" value="Iniciar Sesión">
-        </fieldset>
-    </form>
-</main>
+                <label for="password">Password</label>
+                <input type="password" name="admin[password]" placeholder="Tu Password" id="password">
+            </fieldset>
+        
+            <input type="submit" value="Iniciar Sesión" class="boton boton-verde">
+        </form>
+    </main>
 
-<?php
-incluirTemplate('footer');
+<?php 
+    incluirTemplate('footer');
 ?>

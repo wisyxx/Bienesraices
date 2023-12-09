@@ -1,50 +1,47 @@
 <?php
+    if(!isset($_SESSION)) {
+        session_start();
+    }
 
-declare(strict_types=1);
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-$auth = $_SESSION['login'];
-
+    $auth = $_SESSION['login'] ?? false;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bienes raices</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="/build/css/app.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienes Raices</title>
+    <link rel="stylesheet" href="/build/css/app.css">
 </head>
-
 <body>
-    <header class="header <?php echo $inicio ? 'inicio' : ''; ?>">
+    
+    <header class="header <?php echo $inicio  ? 'inicio' : ''; ?>">
         <div class="contenedor contenido-header">
             <div class="barra">
-                <a href="/"><img src="/build/img/logo.svg" alt="Logo Bienes Raices" /></a>
-                <div class="movil-menu">
-                    <img src="/build/img/barras.svg" alt="icono menu" class="img-menu" />
+                <a href="/">
+                    <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
+                </a>
+
+                <div class="mobile-menu">
+                    <img src="/build/img/barras.svg" alt="icono menu responsive">
                 </div>
 
                 <div class="derecha">
-                    <img class="dark-btn" src="/build/img/dark-mode.svg" alt="Boton dark mode" />
-                    <nav class="navegacion hide">
-                        <a href="/nosotros.php">Nosotros</a><a href="/anuncios.php">Anuncios</a>
-                        <a href="/blog.php">Blog</a>
-                        <a href="/contacto.php">Contacto</a>
-                        <?php if ($auth) : ?>
-                            <a href="cerrar-sesion.php">Cerrar sesión</a>
+                    <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
+                    <nav class="navegacion">
+                        <a href="nosotros.php">Nosotros</a>
+                        <a href="anuncios.php">Anuncios</a>
+                        <a href="blog.php">Blog</a>
+                        <a href="contacto.php">Contacto</a>
+                        <?php if($auth): ?>
+                            <a href="cerrar-sesion.php">Cerrar Sesión</a>
                         <?php endif; ?>
                     </nav>
                 </div>
-            </div>
+                
+            </div> <!--.barra-->
 
-            <?php if ($inicio) { ?>
-                <h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>
-            <?php } ?>
+            <?php  echo $inicio ? "<h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>" : ''; ?>
         </div>
     </header>

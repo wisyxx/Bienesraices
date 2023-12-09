@@ -1,9 +1,0 @@
-.sobre-nosotros {
-  @include tablet {
-    @include grid(2, 2rem);
-    place-items: center;
-  }
-  h4 {
-    text-align: center;
-  }
-}

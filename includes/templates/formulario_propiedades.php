@@ -1,36 +1,54 @@
 <fieldset>
-    <legend class="legend">Información general</legend>
+    <legend>Información General</legend>
 
     <label for="titulo">Titulo:</label>
-    <input maxlength="45" type="text" name="propiedad[titulo]" id="titulo" placeholder="Tiulo propiedad" value="<?php echo sanitizar($propiedad->titulo) ?>">
+    <input type="text" id="titulo" name="propiedad[titulo]" placeholder="Titulo Propiedad" value="<?php echo s( $propiedad->titulo ); ?>">
 
     <label for="precio">Precio:</label>
-    <input type="number" name="propiedad[precio]" id="precio" placeholder="Precio propiedad" value="<?php echo sanitizar($propiedad->precio) ?>">
+    <input type="number" id="precio" name="propiedad[precio]" placeholder="Precio Propiedad" value="<?php echo s($propiedad->precio); ?>">
 
     <label for="imagen">Imagen:</label>
-    <input type="file" accept="image/jpeg, image/png" name="propiedad[imagen]" id="imagen">
-    <?php if ($propiedad->imagen) : ?>
-        <img src="<?php echo '/imagenes/' . $propiedad->imagen; ?>" alt="imagen propiedad" class="small-img">
-    <?php endif; ?>
+    <input type="file" id="imagen" accept="image/jpeg, image/png" name="propiedad[imagen]">
 
-    <label for="descripcion">Descripción</label>
-    <textarea name="propiedad[descripcion]" id="descripcion" cols="30" rows="10"><?php echo sanitizar($propiedad->descripcion) ?></textarea>
+    <?php if($propiedad->imagen) { ?>
+        <img src="/imagenes/<?php echo $propiedad->imagen ?>" class="imagen-small">
+    <?php } ?>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" name="propiedad[descripcion]"><?php echo s($propiedad->descripcion); ?></textarea>
+
 </fieldset>
 
 <fieldset>
-    <legend class="legend">Información Propiedad</legend>
+    <legend>Información Propiedad</legend>
 
     <label for="habitaciones">Habitaciones:</label>
-    <input type="number" name="propiedad[habitaciones]" id="habitaciones" placeholder="Ej: 3" value="<?php echo sanitizar($propiedad->habitaciones) ?>">
+    <input 
+        type="number" 
+        id="habitaciones" 
+        name="propiedad[habitaciones]" 
+        placeholder="Ej: 3" 
+        min="1" 
+        max="9" 
+        value="<?php echo s($propiedad->habitaciones); ?>">
 
-    <label for="baños">Baños:</label>
-    <input type="number" name="propiedad[wc]" id="wc" placeholder="Ej: 3" value="<?php echo sanitizar($propiedad->wc) ?>">
+    <label for="wc">Baños:</label>
+    <input type="number" id="wc" name="propiedad[wc]" placeholder="Ej: 3" min="1" max="9" value="<?php echo s($propiedad->wc); ?>">
 
-    <label for="garages">Garages:</label>
-    <input type="number" name="propiedad[garages]" id="garages" placeholder="Ej: 3" value="<?php echo sanitizar($propiedad->garages) ?>">
+    <label for="estacionamiento">Estacionamiento:</label>
+    <input type="number" id="estacionamiento" name="propiedad[estacionamiento]" placeholder="Ej: 3" min="1" max="9" 
+        value="<?php echo s($propiedad->estacionamiento); ?>">
+
 </fieldset>
+
 <fieldset>
-    <legend class="legend">Vendedor</legend>
-</fieldset>
+    <legend>Vendedor</legend>
 
-<input type="submit" value="<?php echo is_null($propiedad->id) ? 'Crear propiedad' : 'Actualizar propiedad'; ?>" class="boton boton-verde">
+    <select name="propiedad[vendedorId]" id="nombre_vendedor">
+        <option selected value="">-- Seleccione --</option>
+        <?php foreach($vendedores as $vendedor) { ?>
+            <option <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' : '' ?> value="<?php echo s($vendedor->id); ?>"><?php echo s($vendedor->nombre) . " " . s($vendedor->apellido); ?>
+        <?php  } ?>
+    </select>
+
+</fieldset>

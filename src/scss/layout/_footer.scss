@@ -1,14 +1,21 @@
 .footer {
-  background-color: $grisOscuro;
-  padding: calc($separacion / 3) 0 ;
-  margin-bottom: 0;
+    padding: $separacion / 2 0 ;
+    background-color: $grisOscuro;
+    margin-bottom: 0;
 
-  .copy {
-    color: $blanco;
-    text-align: center;
-  }
+    .contenedor-footer {
+        padding-top: $separacion / 2;
+    }
 
-  .contenedor-footer {
-    padding-top: calc($separacion / 3);
-  }
+    .navegacion {
+        visibility: visible;
+        opacity: 1;
+        height: auto;
+    }
+
+    .copyright {
+        color: $blanco;
+        text-align: center;
+    }
 }
+

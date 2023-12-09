@@ -1,24 +1,18 @@
-<?php
-
-declare(strict_types=1);
-require 'includes/app.php';
-incluirTemplate('header');
+<?php 
+    require 'includes/app.php';
+    incluirTemplate('header');
 ?>
 
-<main class="contenedor">
-  <h2>Casas y Departamentos en venta</h2>
+    <main class="contenedor seccion">
 
-  <section class="seccion contenedor">
-    <?php
+        <h2>Casas y Depas en Venta</h2>
 
-    $limit = 100;
-    include './includes/templates/anuncios.php'
+        <?php 
+            $limite = 10;
+            include 'includes/templates/anuncios.php';
+        ?>
+    </main>
 
-      ?>
-  </section>
-
-</main>
-
-<?php
-incluirTemplate('footer');
+<?php 
+    incluirTemplate('footer');
 ?>

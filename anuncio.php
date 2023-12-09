@@ -1,54 +1,63 @@
-<?php
+<?php 
 
-declare(strict_types=1);
-require 'includes/app.php';
-incluirTemplate('header');
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
 
-// ID
-$id = $_GET['id'];
-$id = filter_var($id, FILTER_VALIDATE_INT);
-if (!$id) {
-    header("Location: /anuncios.php");
-}
+    if(!$id) {
+        header('Location: /');
+    }
 
-$db = conectarDB();
+    require 'includes/app.php';
 
-/** CONECTAR BASE DE DATOS **/
+    $db = conectarDB();
 
-// Query
-$queryPropiedades = "SELECT * FROM propiedades WHERE id = $id;";
 
-// Resultado
-$resultadoPropiedades = mysqli_query($db, $queryPropiedades);
-$propiedad = mysqli_fetch_assoc($resultadoPropiedades);
+    // consultar
+    $query = "SELECT * FROM propiedades WHERE id = $id";
+
+    // obtener resultado
+    $resultado = mysqli_query($db, $query);
+
+    if(!$resultado->num_rows) {
+        header('Location: /');
+    } 
+    
+    $propiedad = mysqli_fetch_assoc($resultado);
+
+
+
+    incluirTemplate('header');
 ?>
 
-<main class="contenedor">
-    <div class="caracteristicas-propiedad">
+    <main class="contenedor seccion contenido-centrado">
         <h1><?php echo $propiedad['titulo']; ?></h1>
-        <picture>
-            <source srcset="<?php echo './imagenes/' . $propiedad['imagen']; ?>" type="image/jpg" />
-            <img loading="lazy" width="200" height="300" src="<?php echo $propiedad['imagen']; ?>" alt="Imagen anuncio vivienda" />
-        </picture>
 
-        <div class="contenido-anuncio">
+     
+        <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="imagen de la propiedad">
 
-            <p><?php echo $propiedad['descripcion']; ?></p>
+        <div class="resumen-propiedad">
+            <p class="precio">$<?php echo $propiedad['precio']; ?></p>
+            <ul class="iconos-caracteristicas">
+                <li>
+                    <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono wc">
+                    <p><?php echo $propiedad['wc']; ?></p>
+                </li>
+                <li>
+                    <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
+                    <p><?php echo $propiedad['estacionamiento']; ?></p>
+                </li>
+                <li>
+                    <img class="icono"  loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">
+                    <p><?php echo $propiedad['habitaciones']; ?></p>
+                </li>
+            </ul>
 
-            <div class="contactar">
-                <p>Si desea contactarnos para obtener más información
-                    o empezar los tramites de compra,
-                    pulse el boton "Más información"
-                    y en el mensaje de contacto especifique
-                    la vivienda, Gracias
-                </p>
-                <a href="contacto.php" class="boton boton-amarillo">Más información</a>
-            </div>
+            <?php echo $propiedad['descripcion']; ?>
         </div>
-    </div>
-    </div>
-</main>
+    </main>
 
-<?php
-incluirTemplate('footer');
+<?php 
+    mysqli_close($db);
+
+    incluirTemplate('footer');
 ?>

@@ -1,76 +1,54 @@
-<?php
-require 'includes/app.php';
-incluirTemplate('header');
+<?php 
+    require 'includes/app.php';
+    incluirTemplate('header');
 ?>
 
-<main class="contenedor">
-  <h1>Conoce sobre nosotros</h1>
+    <main class="contenedor seccion">
+        <h1>Conoce sobre Nosotros</h1>
 
-  <section class="contenedor sobre-nosotros">
-    <div class="nosotros-imagen">
-      <picture>
-        <source srcset="build/img/nosotros.webp" type="image/webp" />
-        <img loading="lazy" width="200" height="300" src="build/img/nosotros.jpg" alt="Imagen sobre nosotros" />
-      </picture>
-    </div>
+        <div class="contenido-nosotros">
+            <div class="imagen">
+                <picture>
+                    <source srcset="build/img/nosotros.webp" type="image/webp">
+                    <source srcset="build/img/nosotros.jpg" type="image/jpeg">
+                    <img loading="lazy" src="build/img/nosotros.jpg" alt="Sobre Nosotros">
+                </picture>
+            </div>
 
-    <div class="nosotros-contenido">
-      <h4>25 años de experiencia</h4>
+            <div class="texto-nosotros">
+                <blockquote>
+                    25 Años de experiencia
+                </blockquote>
 
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-        architecto magnam repellendus molestias! Dolor ad, quidem, earum hic
-        vitae illum ducimus eaque, porro repellendus ea est molestiae!
-        Perspiciatis, possimus mollitia? Lorem, ipsum dolor sit amet
-        consectetur adipisicing elit. Aperiam architecto magnam repellendus
-        molestias! Dolor ad, quidem, earum hic vitae illum ducimus eaque,
-        porro repellendus ea est molestiae! Perspiciatis, possimus mollitia?
-      </p>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-        architecto magnam repellendus molestias! Dolor ad, quidem, earum hic
-        vitae illum ducimus eaque, porro repellendus ea est molestiae!
-        Perspiciatis, possimus mollitia?
-      </p>
-    </div>
-  </section>
-</main>
+                <p>Proin consequat viverra sapien, malesuada tempor tortor feugiat vitae. In dictum felis et nunc aliquet molestie. Proin tristique commodo felis, sed auctor elit auctor pulvinar. Nunc porta, nibh quis convallis sollicitudin, arcu nisl semper mi, vitae sagittis lorem dolor non risus. Vivamus accumsan maximus est, eu mollis mi. Proin id nisl vel odio semper hendrerit. Nunc porta in justo finibus tempor. Suspendisse lobortis dolor quis elit suscipit molestie. Sed condimentum, erat at tempor finibus, urna nisi fermentum est, a dignissim nisi libero vel est. Donec et imperdiet augue. Curabitur malesuada sodales congue. Suspendisse potenti. Ut sit amet convallis nisi.</p>
 
-<h2>Más sobre nosotros</h2>
+                <p>Aliquam lectus magna, luctus vel gravida nec, iaculis ut augue. Praesent ac enim lorem. Quisque ac dignissim sem, non condimentum orci. Morbi a iaculis neque, ac euismod felis. Fusce augue quam, fermentum sed turpis nec, hendrerit dapibus ante. Cras mattis laoreet nibh, quis tincidunt odio fermentum vel. Nulla facilisi.</p>
+            </div>
+        </div>
+    </main>
 
-<section class="iconos-nosotros contenedor">
-  <div class="icono">
-    <img src="build/img/icono1.svg" alt="Icono seguridad" loading="lazy" />
-    <h3>Seguridad</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-      saepe laboriosam quod, nam assumenda dolorum, optio cupiditate
-      officiis at aut, totam numquam dolor expedita sequi explicabo
-      blanditiis obcaecati molestias animi.
-    </p>
-  </div>
-  <div class="icono">
-    <img src="build/img/icono2.svg" alt="Icono precio" loading="lazy" />
-    <h3>Precio</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-      saepe laboriosam quod, nam assumenda dolorum, optio cupiditate
-      officiis at aut, totam numquam dolor expedita sequi explicabo
-      blanditiis obcaecati molestias animi.
-    </p>
-  </div>
-  <div class="icono">
-    <img src="build/img/icono3.svg" alt="Icono tiempo" loading="lazy" />
-    <h3>Tiempo</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-      saepe laboriosam quod, nam assumenda dolorum, optio cupiditate
-      officiis at aut, totam numquam dolor expedita sequi explicabo
-      blanditiis obcaecati molestias animi.
-    </p>
-  </div>
-</section>
+    <section class="contenedor seccion">
+        <h1>Más Sobre Nosotros</h1>
 
-<?php
-incluirTemplate('footer');
+        <div class="iconos-nosotros">
+            <div class="icono">
+                <img src="build/img/icono1.svg" alt="Icono seguridad" loading="lazy">
+                <h3>Seguridad</h3>
+                <p>Possimus, suscipit repudiandae. Autem deserunt aliquid deleniti sit minus consectetur obcaecati molestiae dolorem natus dolores reiciendis tempore, explicabo cum nobis laudantium. Voluptates?</p>
+            </div>
+            <div class="icono">
+                <img src="build/img/icono2.svg" alt="Icono Precio" loading="lazy">
+                <h3>Precio</h3>
+                <p>Possimus, suscipit repudiandae. Autem deserunt aliquid deleniti sit minus consectetur obcaecati molestiae dolorem natus dolores reiciendis tempore, explicabo cum nobis laudantium. Voluptates?</p>
+            </div>
+            <div class="icono">
+                <img src="build/img/icono3.svg" alt="Icono Tiempo" loading="lazy">
+                <h3>A Tiempo</h3>
+                <p>Possimus, suscipit repudiandae. Autem deserunt aliquid deleniti sit minus consectetur obcaecati molestiae dolorem natus dolores reiciendis tempore, explicabo cum nobis laudantium. Voluptates?</p>
+            </div>
+        </div>
+    </section>
+
+<?php 
+    incluirTemplate('footer');
 ?>

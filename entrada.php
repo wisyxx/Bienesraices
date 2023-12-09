@@ -1,35 +1,28 @@
-<?php declare(strict_types=1);
-require 'includes/app.php';
-incluirTemplate('header');
+<?php 
+    require 'includes/funciones.php';
+    incluirTemplate('header');
 ?>
-<main class="contenedor seccion contenido-centrado">
-  <h1>Consejos para tener una piscina en casa sin gastar demasiado</h1>
-  <picture>
-    <source srcset="build/img/destacada2.webp" type="image/webp" />
-    <source srcset="build/img/destacada2.jpg" type="image/jpg" />
-    <img loading="lazy" width="200" height="300" src="build/img/destacada2.jpg" alt="Casa con piscina" />
-  </picture>
 
-  <div class="texto-entrada">
-    <p>Esctito el: <span>12-08-2023</span> por: <span>Admin</span></p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-      ratione alias quibusdam doloribus. Odit, laudantium dolore autem a
-      placeat quo sapiente exercitationem quod, blanditiis tenetur ipsa odio
-      minus animi eveniet. Necessitatibus repudiandae odio in porro ab
-      voluptas beatae ipsam aperiam provident libero consequuntur ipsa,
-      magni sed excepturi iusto doloribus accusantium temporibus
-      reprehenderit illum molestias rem itaque! Repellat iste earum dolorem!
-    </p>
-    <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
-      facere harum possimus tempore ex, ea consequatur maiores, ratione
-      ipsa, sapiente sunt qui laborum voluptates fugiat asperiores nihil.
-      Harum, reprehenderit possimus.
-    </p>
-  </div>
-</main>
+    <main class="contenedor seccion contenido-centrado">
+        <h1>Guía para la decoración de tu hogar</h1>
 
-<?php
-incluirTemplate('footer');
+   
+        <picture>
+            <source srcset="build/img/destacada2.webp" type="image/webp">
+            <source srcset="build/img/destacada2.jpg" type="image/jpeg">
+            <img loading="lazy" src="build/img/destacada2.jpg" alt="imagen de la propiedad">
+        </picture>
+
+        <p class="informacion-meta">Escrito el: <span>20/10/2021</span> por: <span>Admin</span> </p>
+
+
+        <div class="resumen-propiedad">
+            <p>Proin consequat viverra sapien, malesuada tempor tortor feugiat vitae. In dictum felis et nunc aliquet molestie. Proin tristique commodo felis, sed auctor elit auctor pulvinar. Nunc porta, nibh quis convallis sollicitudin, arcu nisl semper mi, vitae sagittis lorem dolor non risus. Vivamus accumsan maximus est, eu mollis mi. Proin id nisl vel odio semper hendrerit. Nunc porta in justo finibus tempor. Suspendisse lobortis dolor quis elit suscipit molestie. Sed condimentum, erat at tempor finibus, urna nisi fermentum est, a dignissim nisi libero vel est. Donec et imperdiet augue. Curabitur malesuada sodales congue. Suspendisse potenti. Ut sit amet convallis nisi.</p>
+
+            <p>Aliquam lectus magna, luctus vel gravida nec, iaculis ut augue. Praesent ac enim lorem. Quisque ac dignissim sem, non condimentum orci. Morbi a iaculis neque, ac euismod felis. Fusce augue quam, fermentum sed turpis nec, hendrerit dapibus ante. Cras mattis laoreet nibh, quis tincidunt odio fermentum vel. Nulla facilisi.</p>
+        </div>
+    </main>
+
+<?php 
+    incluirTemplate('footer');
 ?>
