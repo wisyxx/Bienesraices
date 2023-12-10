@@ -6,7 +6,7 @@ class Propiedad extends ActiveRecord {
 
     // Base DE DATOS
     protected static $tabla = 'propiedades';
-    protected static $columnasDB = ['id', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'estacionamiento', 'creado', 'vendedorId'];
+    protected static $columnasDB = ['id', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'garages', 'creado', 'vendedorId'];
 
 
     public $id;
@@ -16,7 +16,7 @@ class Propiedad extends ActiveRecord {
     public $descripcion;
     public $habitaciones;
     public $wc;
-    public $estacionamiento;
+    public $garages;
     public $creado;
     public $vendedorId;
 
@@ -29,7 +29,7 @@ class Propiedad extends ActiveRecord {
         $this->descripcion = $args['descripcion'] ?? '';
         $this->habitaciones = $args['habitaciones'] ?? '';
         $this->wc = $args['wc'] ?? '';
-        $this->estacionamiento = $args['estacionamiento'] ?? '';
+        $this->garages = $args['garages'] ?? '';
         $this->creado = date('Y/m/d');
         $this->vendedorId = $args['vendedorId'] ?? '';
     }
@@ -56,7 +56,7 @@ class Propiedad extends ActiveRecord {
             self::$errores[] = 'El Número de Baños es obligatorio';
         }
 
-        if(!$this->estacionamiento) {
+        if(!$this->garages) {
             self::$errores[] = 'El Número de lugares de Estacionamiento es obligatorio';
         }
         

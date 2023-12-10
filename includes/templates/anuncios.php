@@ -29,7 +29,7 @@
                     </li>
                     <li>
                         <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento">
-                        <p><?php echo $propiedad['estacionamiento']; ?></p>
+                        <p><?php echo $propiedad['garages']; ?></p>
                     </li>
                     <li>
                         <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono habitaciones">

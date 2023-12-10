@@ -1,6 +1,4 @@
 <?php 
-
-    // Incluye el header
     require 'includes/app.php';
     use App\Admin;
 
@@ -37,8 +35,6 @@
         }
 
     }
-
-
 
     incluirTemplate('header');
 ?>

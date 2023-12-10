@@ -1,6 +1,6 @@
 .dark-mode {
     background-color: darken($grisOscuro, 10);
-
+    color: $blanco;
     p {
         color: $blanco;
     }
@@ -22,7 +22,11 @@
         }
     }
     
-
+    .iconos-nosotros {
+        img {
+            filter: invert(100%);
+        }
+    }
     .texto-nosotros blockquote {
         color: $blanco;
     }
