@@ -39,7 +39,7 @@
     <select name="propiedad[vendedorId]" id="nombre_vendedor">
         <option selected value="">-- Seleccione --</option>
         <?php foreach ($vendedores as $vendedor) { ?>
-            <option <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' : '' ?> value="<?php echo s($vendedor->id); ?>"><?php echo s($vendedor->nombre) . " " . s($vendedor->apellido); ?>
+            <option <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' : '' ?> value="<?php echo s($vendedor->id); ?>"><?php echo s($vendedor->nombre) . " " . s($vendedor->apellidos); ?>
             <?php  } ?>
     </select>
 

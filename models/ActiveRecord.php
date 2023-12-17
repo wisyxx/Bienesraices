@@ -190,4 +190,12 @@ class ActiveRecord {
             unlink(CARPETA_IMAGENES . $this->imagen);
         }
     }
+
+    public static function get($limit) {
+        $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $limit;
+        
+        $resultado = self::consultarSQL($query);
+
+        return $resultado;
+    }
 }
