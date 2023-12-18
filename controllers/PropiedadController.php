@@ -21,6 +21,7 @@ class PropiedadController
             'resultado' => $resultado
         ]);
     }
+
     public static function create(Router $router)
     {
         $propiedad = new Propiedad;
@@ -67,6 +68,7 @@ class PropiedadController
             'errores' => $errores
         ]);
     }
+
     public static function update(Router $router)
     {
         $id = redireccionar('/admin');
@@ -109,6 +111,7 @@ class PropiedadController
             'vendedores' => $vendedores
         ]);
     }
+
     public static function eliminar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
